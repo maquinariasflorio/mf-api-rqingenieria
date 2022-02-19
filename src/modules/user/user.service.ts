@@ -129,7 +129,7 @@ export class UserService {
             return await this.mailerService.sendMail( {
                 to      : user.email.toLowerCase(),
                 from    : `"No Reply" <${process.env.SMTP_USER}>`,
-                subject : 'Maquinarias Florio - Usuario creado',
+                subject : 'Usuario creado',
                 text    : `Su usuario ha sido creado con éxito. Su contraseña es: ${newPassword}.`,
                 html    : `<p>Su usuario ha sido creado con éxito. Su contraseña es: <b>${newPassword}</b>.</p>`,
             } )
