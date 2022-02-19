@@ -828,7 +828,7 @@ export class MachineryService {
         await this.mailerService.sendMail( {
             to          : receivers,
             from        : `"No Reply" <${process.env.SMTP_USER}>`,
-            subject     : 'Maquinarias Florio - Nuevo registro de uso',
+            subject     : 'Nuevo registro de uso',
             text        : `Se registró un nuevo uso de maquinaria con el folio: ${folio}`,
             html        : `<p>Se registró un nuevo uso de maquinaria con el folio: ${folio}</p>`,
             attachments : [
