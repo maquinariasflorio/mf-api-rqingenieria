@@ -645,10 +645,16 @@ export class MachineryService {
             
         return maintenances.reduce( (acc, maintenance) => {
         
-            acc.push( {
-                ...maintenance,
-                equipment: equipments.find(equipment => equipment._id.toString() === maintenance.equipment.toString() ),
-            } )
+            const equipment = equipments.find( (equipment) => equipment._id.toString() === maintenance.equipment.toString() )
+        
+            if (equipment) {
+
+                acc.push( {
+                    ...maintenance,
+                    equipment,
+                } )
+            
+            }
         
             return acc
             
