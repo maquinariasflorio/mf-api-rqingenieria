@@ -645,10 +645,16 @@ export class MachineryService {
             
         return maintenances.reduce( (acc, maintenance) => {
         
-            acc.push( {
-                ...maintenance,
-                equipment: equipments.find(equipment => equipment._id.toString() === maintenance.equipment.toString() ),
-            } )
+            const equipment = equipments.find( (equipment) => equipment._id.toString() === maintenance.equipment.toString() )
+        
+            if (equipment) {
+
+                acc.push( {
+                    ...maintenance,
+                    equipment,
+                } )
+            
+            }
         
             return acc
             
@@ -699,7 +705,7 @@ export class MachineryService {
 
     async getAllMachineryJobRegistry(conditions?: Record<string, unknown>, sort: Record<string, unknown> = { date: -1 } ) {
         
-        const jobs = await this.machineryJobRegistryModel.find(conditions).sort(sort).lean()
+        const jobs = await this.machineryJobRegistryModel.find(conditions).sort(sort).allowDiskUse(true).lean()
 
         const bookingCache = {}
         
