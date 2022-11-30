@@ -28,7 +28,7 @@ export class ReportService {
 
         // buildings of the day
 
-        const bookings = await this.bookingService.getBookingsByDate(date)
+        const bookings = await this.bookingService.getBookingsByDate(date, true)
 
         function getMachineBooking(equipment: string, type: string) {
 
@@ -66,7 +66,7 @@ export class ReportService {
 
             "machineryType": 'OTHER',
         } )
-        const internalMachineryJobRegistriesMachinesIds = internalMachineryJobRegistries.map( (jobRegistry) => new ObjectId(jobRegistry.equipment._id) )
+        const internalMachineryJobRegistriesMachinesIds = internalMachineryJobRegistries.results.map( (jobRegistry) => new ObjectId(jobRegistry.equipment._id) )
 
         const restOfMachines = await this.machineryService.findEquipment( {
             type : 'OTHER',
@@ -77,7 +77,7 @@ export class ReportService {
         
         const internalMachinesUnion = [
 
-            ...internalMachineryJobRegistries.map( (jobRegistry) => {
+            ...internalMachineryJobRegistries.results.map( (jobRegistry) => {
 
                 return {
                     equipment      : jobRegistry.equipment.code,
@@ -88,6 +88,8 @@ export class ReportService {
                     endHourmeter   : jobRegistry.endHourmeter,
                     totalHours     : jobRegistry.totalHours,
                     observations   : jobRegistry.observations || '',
+                    client         : jobRegistry.client.name,
+                    folio          : jobRegistry.folio,
                 }
             
             } ),
@@ -105,6 +107,8 @@ export class ReportService {
                     endHourmeter   : 0,
                     totalHours     : 0,
                     observations   : '',
+                    client         : booking ? booking.client.name : '',
+                    folio          : 0,
                 }
             
             } ),
@@ -120,7 +124,7 @@ export class ReportService {
 
             "machineryType": 'TRUCK',
         } )
-        const internalTruckJobRegistriesMachinesIds = internalTruckJobRegistries.map( (jobRegistry) => new ObjectId(jobRegistry.equipment._id) )
+        const internalTruckJobRegistriesMachinesIds = internalTruckJobRegistries.results.map( (jobRegistry) => new ObjectId(jobRegistry.equipment._id) )
 
         const restOfTruckMachines = await this.machineryService.findEquipment( {
             type : 'TRUCK',
@@ -131,7 +135,7 @@ export class ReportService {
 
         const internalTrucksUnion = [
 
-            ...internalTruckJobRegistries.map( (jobRegistry) => {
+            ...internalTruckJobRegistries.results.map( (jobRegistry) => {
 
                 return {
                     equipment      : jobRegistry.equipment.code,
@@ -143,6 +147,8 @@ export class ReportService {
                     totalTravels   : jobRegistry.totalTravels,
                     workingDayType : jobRegistry.workingDayType ? (jobRegistry.workingDayType === 'FULL' ? 'COMPLETA' : 'MEDIA') : '',
                     observations   : jobRegistry.observations || '',
+                    client         : jobRegistry.client.name,
+                    folio          : jobRegistry.folio,
                 }
             
             } ),
@@ -161,6 +167,8 @@ export class ReportService {
                     totalTravels   : 0,
                     workingDayType : '',
                     observations   : '',
+                    client         : booking ? booking.client.name : '',
+                    folio          : 0,
                 }
             
             } ),
@@ -188,7 +196,7 @@ export class ReportService {
         
         const externalMachinesUnion = [
 
-            ...externalMachineryJobRegistries.map( (jobRegistry) => {
+            ...externalMachineryJobRegistries.results.map( (jobRegistry) => {
 
                 return {
                     equipment      : jobRegistry.equipment.name,
@@ -199,6 +207,8 @@ export class ReportService {
                     endHourmeter   : jobRegistry.endHourmeter || 0,
                     totalHours     : jobRegistry.totalHours || 0,
                     observations   : jobRegistry.observations || '',
+                    client         : jobRegistry.client.name,
+                    folio          : jobRegistry.folio,
                 }
             
             } ),
@@ -217,7 +227,7 @@ export class ReportService {
 
         const externalTrucksUnion = [
 
-            ...externalTruckJobRegistries.map( (jobRegistry) => {
+            ...externalTruckJobRegistries.results.map( (jobRegistry) => {
 
                 return {
                     equipment      : jobRegistry.equipment.name,
@@ -229,6 +239,8 @@ export class ReportService {
                     totalTravels   : jobRegistry.totalTravels || 0,
                     workingDayType : jobRegistry.workingDayType ? (jobRegistry.workingDayType === 'FULL' ? 'COMPLETA' : 'MEDIA') : '',
                     observations   : jobRegistry.observations || '',
+                    client         : jobRegistry.client.name,
+                    folio          : jobRegistry.folio,
                 }
             
             } ),

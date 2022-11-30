@@ -186,10 +186,10 @@ export class MachineryResolver {
     
     }
 
-    @Query( () => [ FullMachineryJobRegistry ] )
-    async getAllMachineryJobRegistryByUser(@Args( { nullable: true, name: 'user' } ) user: string) {
+    @Query( () => FullMachineryJobRegistry)
+    async getAllMachineryJobRegistryByUser(@Args( { nullable: true, name: 'user' } ) user: string, @Args( { nullable: true, name: 'next' } ) next: string) {
 
-        return await this.machineryService.getAllMachineryJobRegistryByUser(user)
+        return await this.machineryService.getAllMachineryJobRegistryByUser(user, next)
     
     }
 

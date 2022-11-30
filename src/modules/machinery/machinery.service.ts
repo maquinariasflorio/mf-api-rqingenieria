@@ -703,13 +703,23 @@ export class MachineryService {
         
     }
 
-    async getAllMachineryJobRegistry(conditions?: Record<string, unknown>, sort: Record<string, unknown> = { date: -1 } ) {
+    async getAllMachineryJobRegistry(conditions?: Record<string, unknown>, pagination?: Record<string, unknown>, sort: Record<string, unknown> = { date: -1 } ) {
         
-        const jobs = await this.machineryJobRegistryModel.find(conditions).sort(sort).allowDiskUse(true).lean()
+        let paginationInfo = {
+            results : [],
+            next    : null,
+            hasNext : false,
+        }
+
+        if (pagination == null)
+            paginationInfo.results = await this.machineryJobRegistryModel.find(conditions).sort(sort).allowDiskUse(true).lean()
+        else
+            paginationInfo = await (this.machineryJobRegistryModel as any).paginate( { query: conditions, limit: 30, paginatedField: 'folio', sortAscending: false, next: pagination?.next } )
+        
 
         const bookingCache = {}
         
-        for (const job of jobs) {
+        for (const job of paginationInfo.results) {
 
             // is external
             if (!job.equipment._id) {
@@ -730,7 +740,7 @@ export class MachineryService {
         
         }
 
-        return jobs
+        return paginationInfo
     
     }
 
@@ -749,7 +759,7 @@ export class MachineryService {
     
     }
 
-    async getAllMachineryJobRegistryByUser(userId: string) {
+    async getAllMachineryJobRegistryByUser(userId: string, next: string) {
 
         const conditions = {
             "executor._id": new ObjectId(userId),
@@ -758,7 +768,9 @@ export class MachineryService {
         if (!userId)
             delete conditions["executor._id"]
 
-        return await this.getAllMachineryJobRegistry(conditions)
+        return await this.getAllMachineryJobRegistry(conditions, {
+            next,
+        } )
     
     }
 
