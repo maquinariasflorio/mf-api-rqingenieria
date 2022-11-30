@@ -204,14 +204,6 @@ type FullMachineryJobRegistryResult {
   address: String!
 }
 
-type FullMachineryJobRegistry {
-  next: String!
-  hasNext: Boolean!
-  previous: String
-  hasPrevious: Boolean
-  results: [FullMachineryJobRegistryResult!]!
-}
-
 union Equipment = ExternalEquipment | InternalEquipment
 
 type ExternalEquipment {
@@ -248,6 +240,14 @@ type InternalOperator {
   role: String!
   isSystemAdmin: Boolean!
   signature: String
+}
+
+type FullMachineryJobRegistry {
+  next: String!
+  hasNext: Boolean!
+  previous: String
+  hasPrevious: Boolean
+  results: [FullMachineryJobRegistryResult!]!
 }
 
 type FullMachineryFuelRegistry {
@@ -351,6 +351,8 @@ type MachineryResume {
   endHourmeter: Float!
   totalHours: Float!
   observations: String!
+  client: String
+  folio: Float
 }
 
 type TruckResume {
@@ -360,9 +362,11 @@ type TruckResume {
   building: String!
   address: String!
   load: String
-  totalTravels: Float!
+  totalTravels: Float
   workingDayType: String!
   observations: String!
+  client: String
+  folio: Float
 }
 
 type DailyEquipmentsResume {
@@ -433,9 +437,9 @@ type Query {
   getMaintenancePage(lastUid: Float!, equipment: String!): [FullMaintenance!]!
   getAllMachineryJobRegistry: [FullMachineryJobRegistry!]!
   getAllMachineryJobRegistryByUserAndDate(endDate: String!, startDate: String!, user: String!): [FullMachineryJobRegistry!]!
-  getAllMachineryJobRegistryByUser(user: String): [FullMachineryJobRegistry!]!
+  getAllMachineryJobRegistryByUser(next: String, user: String): FullMachineryJobRegistry!
   getAllMachineryJobRegistryByDate(date: String!): [FullMachineryJobRegistry!]!
-  getPreviousMachineryJobRegistry(equipment: String!, date: String!, user: String!): [FullMachineryJobRegistryResult!]!
+  getPreviousMachineryJobRegistry(equipment: String!, date: String!, user: String!): [FullMachineryJobRegistry!]!
   getAllMachineryFuelRegistryByUser(user: String): [FullMachineryFuelRegistry!]!
   sendJobRegistryByEmail(receivers: [String!]!, folio: String!, file: String!): Ok!
   getJobRegistryById(id: String!): [FullMachineryJobRegistry!]!
@@ -812,7 +816,7 @@ type Subscription {
   maintenanceAdded: FullMaintenance!
   maintenanceStatusUpdated: MachineryMaintenance!
   maintenanceDeleted: MachineryMaintenance!
-  jobRegistryAdded: FullMachineryJobRegistryResult!
+  jobRegistryAdded: FullMachineryJobRegistry!
   jobRegistryDeleted: String!
-  jobRegistryUpdated: FullMachineryJobRegistryResult!
+  jobRegistryUpdated: FullMachineryJobRegistry!
 }

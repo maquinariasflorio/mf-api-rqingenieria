@@ -842,8 +842,6 @@ export class MachineryService {
     }
 
     async sendJobRegistryByEmail(file, folio, receivers) {
-
-        console.log(receivers)
         
         return await this.mailerService.sendMail( {
             to          : receivers,
@@ -857,9 +855,11 @@ export class MachineryService {
                     path     : 'data:application/pdf;base64,' + file,
                 },
             ],
-        } ).then(() => {
+        } ).then( () => {
+
             return new Ok()
-        })
+        
+        } )
     
     }
 
