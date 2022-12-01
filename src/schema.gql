@@ -435,14 +435,14 @@ type Query {
   getAllPreviousFuelRegistries(equipments: [String!]!): [FullMachineryFuelRegistry!]!
   getAllLastMaintenance: [FullMaintenance!]!
   getMaintenancePage(lastUid: Float!, equipment: String!): [FullMaintenance!]!
-  getAllMachineryJobRegistry: [FullMachineryJobRegistry!]!
-  getAllMachineryJobRegistryByUserAndDate(endDate: String!, startDate: String!, user: String!): [FullMachineryJobRegistry!]!
+  getAllMachineryJobRegistry: FullMachineryJobRegistry!
+  getAllMachineryJobRegistryByUserAndDate(endDate: String!, startDate: String!, user: String!): FullMachineryJobRegistry!
   getAllMachineryJobRegistryByUser(next: String, user: String): FullMachineryJobRegistry!
-  getAllMachineryJobRegistryByDate(date: String!): [FullMachineryJobRegistry!]!
-  getPreviousMachineryJobRegistry(equipment: String!, date: String!, user: String!): [FullMachineryJobRegistry!]!
-  getAllMachineryFuelRegistryByUser(user: String): [FullMachineryFuelRegistry!]!
+  getAllMachineryJobRegistryByDate(date: String!): FullMachineryJobRegistry!
+  getPreviousMachineryJobRegistry(equipment: String!, date: String!, user: String!): FullMachineryJobRegistry!
+  getAllMachineryFuelRegistryByUser(user: String): FullMachineryJobRegistry!
   sendJobRegistryByEmail(receivers: [String!]!, folio: String!, file: String!): Ok!
-  getJobRegistryById(id: String!): [FullMachineryJobRegistry!]!
+  getJobRegistryById(id: String!): FullMachineryJobRegistry!
   getAllBookings: [Booking!]!
   getBuildingsByClientAndDate(equipment: String!, date: String!, client: String!): [Booking!]!
   getBookingByClientDateEquipmentBuilding(building: String!, equipment: String!, date: String!, client: String!): [Booking!]!

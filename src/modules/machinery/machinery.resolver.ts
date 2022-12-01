@@ -172,14 +172,14 @@ export class MachineryResolver {
     
     }
 
-    @Query( () => [ FullMachineryJobRegistry ] )
+    @Query( () => FullMachineryJobRegistry)
     async getAllMachineryJobRegistry() {
 
         return await this.machineryService.getAllMachineryJobRegistry()
     
     }
 
-    @Query( () => [ FullMachineryJobRegistry ] )
+    @Query( () => FullMachineryJobRegistry)
     async getAllMachineryJobRegistryByUserAndDate(@Args('user') user: string, @Args('startDate') startDate: string, @Args('endDate') endDate: string) {
 
         return await this.machineryService.getAllMachineryJobRegistryByUserAndDate(user, startDate, endDate)
@@ -193,14 +193,14 @@ export class MachineryResolver {
     
     }
 
-    @Query( () => [ FullMachineryJobRegistry ] )
+    @Query( () => FullMachineryJobRegistry)
     async getAllMachineryJobRegistryByDate(@Args('date') date: string) {
 
         return await this.machineryService.getAllMachineryJobRegistryByDate(date)
     
     }
 
-    @Query( () => [ FullMachineryJobRegistry ] )
+    @Query( () => FullMachineryJobRegistry)
     async getPreviousMachineryJobRegistry(@Args('user') user: string, @Args('date') date: string, @Args('equipment') equipment: string) {
 
         return await this.machineryService.getPreviousMachineryJobRegistry(user, date, equipment)
@@ -258,7 +258,7 @@ export class MachineryResolver {
     
     }
 
-    @Query( () => [ FullMachineryJobRegistry ] )
+    @Query( () => FullMachineryJobRegistry)
     async getJobRegistryById(@Args('id') id: string) {
 
         return await this.machineryService.getJobRegistryById(id)
