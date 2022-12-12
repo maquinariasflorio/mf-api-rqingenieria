@@ -265,7 +265,7 @@ export class ReportService {
             "equipment._id" : { $exists: true },
         } )
 
-        return await this.payStateRecordsGenerator(jobRegistries, {} )
+        return await this.payStateRecordsGenerator(jobRegistries.results, {} )
     
     }
 
@@ -288,9 +288,9 @@ export class ReportService {
         else if (filters.equipment)
             conditions['equipment.name'] = filters.equipment
         
-        const jobRegistries = await this.machineryService.getAllMachineryJobRegistry(conditions, { date: 1 } )
+        const jobRegistries = await this.machineryService.getAllMachineryJobRegistry(conditions, null, { date: 1 } )
 
-        return await this.payStateRecordsGenerator(jobRegistries, filters)
+        return await this.payStateRecordsGenerator(jobRegistries.results, filters)
     
     }
 
