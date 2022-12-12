@@ -24,7 +24,7 @@ jobs:
           credentials_json: "${{ secrets.GCP_SA_KEY }}"
 
       # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@v1
 
       # Build docker image
       - name: Build Docker Image
